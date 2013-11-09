@@ -1,0 +1,5 @@
+# Ignore vim droppings
+*.sw[onp]
+
+# Ignore binaries
+/go-blackjack
