@@ -12,6 +12,7 @@ const MINIMUM_SHOE_SIZE = 15
 const (
 	ACTION_HIT = iota
 	ACTION_STAND
+	ACTION_DOUBLE
 )
 
 const (
@@ -97,6 +98,9 @@ func (round *Round) Play(determineAction func(round Round) Action) Outcome {
 			if round.Player.IsBusted() {
 				break
 			}
+		} else if action == ACTION_DOUBLE {
+			round.dealToPlayer()
+			break
 		}
 	}
 
