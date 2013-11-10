@@ -1,6 +1,7 @@
 package main
 
 import (
+	"fmt"
 	"bufio"
 	"bytes"
 	"io"
@@ -18,7 +19,12 @@ type internalStrategy struct {
 }
 
 func (self *internalStrategy) GetAction(player, dealer Hand) Action {
-	return ACTION_HIT
+	// TODO: We'll need a smarter way to look up actions from our strategies than
+	// this...
+	playerKey := fmt.Sprintf("%d", player.Sum())
+	dealerKey := fmt.Sprintf("%d", dealer[0].Value)
+
+	return self.strategies[playerKey][dealerKey]
 }
 
 func translateAction(action string) Action {

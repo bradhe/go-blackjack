@@ -63,6 +63,10 @@ func (round *Round) Play(determineAction func(round Round) Action) Outcome {
 		return OUTCOME_ABORT
 	}
 
+	// Clear our both hands!
+	round.Dealer = Hand{}
+	round.Player = Hand{}
+
 	// First set of cards...
 	round.dealToDealer()
 	round.dealToPlayer()
