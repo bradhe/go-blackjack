@@ -1,3 +1,10 @@
+# Wizard of Odds Simple Strategy
+#
+# This strategy is an implementation of the Wizard of Odd's simplified
+# blackjack strategy.
+#
+# http://wizardofodds.com/games/blackjack/
+[hard]
    2 3 4 5 6 7 8 9 10 A
  4 H H H H H H H H  H H
  5 H H H H H H H H  H H
@@ -14,5 +21,16 @@
 16 S S S S S H H H  H H
 17 S S S S S S S S  S S
 18 S S S S S S S S  S S
+20 S S S S S S S S  S S
+21 S S S S S S S S  S S
+
+[soft]
+   2 3 4 5 6 7 8 9 10 A
+13 H H H H H H H H  H H
+14 H H H H H H H H  H H
+15 H H H H H H H H  H H
+16 D D D D D H H H  H H
+17 D D D D D H H H  H H
+18 D D D D D H H H  H H
 20 S S S S S S S S  S S
 21 S S S S S S S S  S S
