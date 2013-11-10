@@ -5,12 +5,15 @@ import (
 	"flag"
 )
 
-var strategyFile = flag.String("strategy", "", "strategy file path")
+var strategyFile string
 var verbose bool
+var games int
 
 var totalHands int
 
 func init() {
+  flag.StringVar(&strategyFile, "strategy", "", "strategy file path")
+	flag.IntVar(&games, "games", 10, "number of games to play")
 	flag.BoolVar(&verbose, "verbose", false, "should output steps")
 	flag.Parse()
 }
@@ -21,9 +24,9 @@ func pct(top, bottom int) (float64) {
 
 func main() {
 	outcomes := make(map[Outcome]int)
-	strategy := LoadStrategy(*strategyFile)
+	strategy := LoadStrategy(strategyFile)
 
-	for i := 0; i < 100; i += 1 {
+	for i := 0; i < games; i += 1 {
 		deck := NewMultipleDeck(DEFAULT_DECKS)
 		round := NewRound(deck.Shuffle())
 
