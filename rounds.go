@@ -1,8 +1,8 @@
 package main
 
 import (
-	"log"
 	"encoding/binary"
+	"log"
 	"math/rand"
 	"os"
 )

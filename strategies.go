@@ -1,10 +1,10 @@
 package main
 
 import (
-	"log"
-	"fmt"
 	"bufio"
+	"fmt"
 	"io"
+	"log"
 	"os"
 	"strings"
 )
@@ -70,10 +70,10 @@ func translateAction(action string) Action {
 	return ACTION_STAND
 }
 
-func loadStrategy(reader *bufio.Reader) (map[string] map[string] Action) {
+func loadStrategy(reader *bufio.Reader) map[string]map[string]Action {
 	// For holding the dealer cards we can get...
 	dealerCards := make([]string, 0)
-	strategy := make(map[string] map[string] Action)
+	strategy := make(map[string]map[string]Action)
 
 	for {
 		line, err := reader.ReadString('\n')
@@ -95,7 +95,7 @@ func loadStrategy(reader *bufio.Reader) (map[string] map[string] Action) {
 			}
 		} else if line == "" || strings.HasPrefix(line, "#") {
 			break
-		}else {
+		} else {
 			// This line describes a strategy, so let's pull it
 			// apart. First token is going to be the scenario.
 			toks := strings.Split(line, " ")
@@ -126,7 +126,6 @@ func loadStrategy(reader *bufio.Reader) (map[string] map[string] Action) {
 
 	return strategy
 }
-
 
 // Loads the relevant strategy in from memory.
 func LoadStrategy(path string) Strategy {

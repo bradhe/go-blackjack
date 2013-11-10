@@ -48,7 +48,7 @@ func (hand Hand) IsBusted() bool {
 
 // If the hand has an ace that is counting as it's 11 value, it's considered a
 // soft hand. Different strategies are applied in that scenario.
-func (hand Hand) IsSoft() (bool) {
+func (hand Hand) IsSoft() bool {
 	aces := 0
 	otherSum := 0
 
@@ -70,9 +70,9 @@ func (hand Hand) IsSoft() (bool) {
 	// is indeed soft!
 	singles := (aces - 1)
 
-	return BUST_LIMIT - (otherSum + singles) >= 11
+	return BUST_LIMIT-(otherSum+singles) >= 11
 }
 
-func (hand Hand) IsHard() (bool) {
+func (hand Hand) IsHard() bool {
 	return !hand.IsSoft()
 }
