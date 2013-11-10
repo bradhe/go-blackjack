@@ -6,6 +6,7 @@ import (
 
 func main() {
 	outcomes := make(map[Outcome]int)
+	LoadStrategy("strategies/passive")
 
 	for i := 0; i < 10; i += 1 {
 		deck := NewMultipleDeck(DEFAULT_DECKS)
