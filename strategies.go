@@ -1,6 +1,7 @@
 package main
 
 import (
+	"log"
 	"fmt"
 	"bufio"
 	"io"
@@ -22,18 +23,36 @@ func (self *internalStrategy) GetAction(player, dealer Hand) Action {
 	// TODO: We'll need a smarter way to look up actions from our strategies than
 	// this...
 	playerKey := fmt.Sprintf("%d", player.Sum())
-	dealerKey := fmt.Sprintf("%d", dealer[0].Value)
+
+	// Need some special rules for this one.
+	var dealerKey string
+
+	if dealer[0].Symbol == CARD_ACE {
+		dealerKey = "A"
+	} else {
+		dealerKey = fmt.Sprintf("%d", dealer[0].Value)
+	}
+
+	var action Action
 
 	if player.IsSoft() {
 		if val, ok := self.softStrategies[playerKey][dealerKey]; ok {
-			return val
+			action = val
+		} else {
+			// No soft strategy available.
+			action = self.hardStrategies[playerKey][dealerKey]
 		}
-
-		// No soft strategy available.
-		return self.hardStrategies[playerKey][dealerKey]
+	} else {
+		action = self.hardStrategies[playerKey][dealerKey]
 	}
 
-	return self.hardStrategies[playerKey][dealerKey]
+	// If the player's hand has more than 2 cards and the action the strategy
+	// calls for is double, we'll hit instead.
+	if action == ACTION_DOUBLE && len(player) > 2 {
+		action = ACTION_HIT
+	}
+
+	return action
 }
 
 func translateAction(action string) Action {
@@ -85,9 +104,20 @@ func loadStrategy(reader *bufio.Reader) (map[string] map[string] Action) {
 			// We'll need a new map here...
 			data := make(map[string]Action)
 
+			// To keep of how many we've seen.
+			idx := 0
+
 			// ...and now let's load 'er up.
-			for i, action := range actions {
-				data[dealerCards[i]] = translateAction(action)
+			for _, action := range actions {
+				// Skip blank tokens...
+				if strings.TrimSpace(action) == "" {
+					continue
+				}
+
+				data[dealerCards[idx]] = translateAction(action)
+
+				// Gotta keep track of this outselves because we can't trust i here.
+				idx += 1
 			}
 
 			strategy[scenario] = data
@@ -100,6 +130,8 @@ func loadStrategy(reader *bufio.Reader) (map[string] map[string] Action) {
 
 // Loads the relevant strategy in from memory.
 func LoadStrategy(path string) Strategy {
+	log.Printf("Loading strategy %s", path)
+
 	// Let's see if we can read the file.
 	file, err := os.Open(path)
 
