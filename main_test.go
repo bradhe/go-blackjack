@@ -12,12 +12,6 @@ func valueShouldBe(t *testing.T, symbol int, value int) {
 	}
 }
 
-func shouldNotBeBusted(t *testing.T, hand Hand) {
-	if hand.IsBusted() {
-		t.Fail()
-	}
-}
-
 func TestCreatingCardSetsSymbol(t *testing.T) {
 	card := NewCard(CARD_ONE, SUIT_SPADES)
 
@@ -49,52 +43,6 @@ func TestCreatingAceSetsAlternateValue(t *testing.T) {
 	card := NewCard(CARD_ACE, SUIT_SPADES)
 
 	if card.AlternateValue != 1 {
-		t.Fail()
-	}
-}
-
-func TestAddingCardsToHandsWorks(t *testing.T) {
-	hand := Hand{}
-
-	// This is a problematic semantic. Basically, we're saying that adding
-	// a card creates a new hand.
-	hand = hand.AddCard(NewCard(CARD_ONE, SUIT_SPADES))
-
-	if len(hand) != 1 {
-		t.Fail()
-	}
-}
-
-func TestSummingHandsWorks(t *testing.T) {
-	hand := Hand{}
-	hand = hand.AddCard(NewCard(CARD_ONE, SUIT_SPADES))
-
-	if hand.Sum() != 1 {
-		t.Fail()
-	}
-}
-
-func TestHandsDoNotBustIfThereAreSoftHandsToBeMade(t *testing.T) {
-	hand := Hand{}
-	hand = hand.AddCard(NewCard(CARD_ACE, SUIT_SPADES))
-	hand = hand.AddCard(NewCard(CARD_NINE, SUIT_SPADES))
-	hand = hand.AddCard(NewCard(CARD_ACE, SUIT_SPADES))
-	shouldNotBeBusted(t, hand)
-}
-
-func TestHandsAreNotBustedForBlackjack(t *testing.T) {
-	hand := Hand{}
-	hand = hand.AddCard(NewCard(CARD_ACE, SUIT_SPADES))
-	hand = hand.AddCard(NewCard(CARD_JACK, SUIT_SPADES))
-	shouldNotBeBusted(t, hand)
-}
-
-func TestShouldNotPrematurelyUseAlternates(t *testing.T) {
-	hand := Hand{}
-	hand = hand.AddCard(NewCard(CARD_ACE, SUIT_SPADES))
-	hand = hand.AddCard(NewCard(CARD_FOUR, SUIT_SPADES))
-
-	if hand.Sum() != 15 {
 		t.Fail()
 	}
 }
