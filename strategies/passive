@@ -1,3 +1,9 @@
+# Passive Strategy
+#
+# This represents an extremely nieve strategy for playing the game. Basically,
+# anything over 17, you stand. Anything less, you hit. Pretty simple. Great for
+# testing.
+[sum]
    2 3 4 5 6 7 8 9 10 A
  4 H H H H H H H H  H H
  5 H H H H H H H H  H H
@@ -16,3 +22,5 @@
 18 S S S S S S S S  S S
 20 S S S S S S S S  S S
 21 S S S S S S S S  S S
+
+[card]
