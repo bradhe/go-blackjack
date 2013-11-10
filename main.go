@@ -1,19 +1,26 @@
 package main
 
 import (
+	"flag"
 	"fmt"
 )
 
+var strategyFile = flag.String("strategy", "", "strategy file path")
+
+func init() {
+	flag.Parse()
+}
+
 func main() {
 	outcomes := make(map[Outcome]int)
-	strategy := LoadStrategy("strategies/passive")
+	strategy := LoadStrategy(*strategyFile)
 
-	for i := 0; i < 10; i += 1 {
+	for i := 0; i < 100; i += 1 {
 		deck := NewMultipleDeck(DEFAULT_DECKS)
 		round := NewRound(deck.Shuffle())
 
 		strategy := func(round Round) Action {
-			return strategy.GetAction(round.Dealer, round.Player)
+			return strategy.GetAction(round.Player, round.Dealer)
 		}
 
 		for {
