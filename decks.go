@@ -46,7 +46,7 @@ func (deck Deck) Draw() (Card, Deck) {
 }
 
 func generateSuit(suit rune, deck Deck) Deck {
-	for i := 0; i < 13; i += 1 {
+	for i := 1; i < 14; i += 1 {
 		deck = append(deck, NewCard(i, suit))
 	}
 
