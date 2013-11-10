@@ -8,9 +8,11 @@ wondering:
 
 This tiny app is meant to address that.
 
-## Disclaimer
+## Disclaimers
 
-I actually don't know very much at all about Blackjack.
+1. I actually don't know very much at all about Blackjack.
+1. There might be bugs, so the numbers may be incorrect.
+1. Memorizing strategy (probably) doesn't make up for knowing the game.
 
 ## How does it work?
 
