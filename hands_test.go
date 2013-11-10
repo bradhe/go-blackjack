@@ -62,7 +62,7 @@ func TestShouldBeHardIfNoAceIsPresent(t *testing.T) {
 	hand = hand.AddCard(NewCard(CARD_FOUR, SUIT_SPADES))
 
 	// If the hand is not hard (i.e. soft)
-	if !hand.IsHard() {
+	if hand.IsSoft() {
 		t.Fail()
 	}
 }
@@ -70,7 +70,7 @@ func TestShouldBeHardIfNoAceIsPresent(t *testing.T) {
 func TestShouldBeSoftIfAceIsPresent(t *testing.T) {
 	hand := Hand{}
 	hand = hand.AddCard(NewCard(CARD_ACE, SUIT_SPADES))
-	hand = hand.AddCard(NewCard(CARD_FOUR, SUIT_SPADES))
+	hand = hand.AddCard(NewCard(CARD_EIGHT, SUIT_SPADES))
 
 	// If the hand is not soft (i.e. hard)
 	if !hand.IsSoft() {
