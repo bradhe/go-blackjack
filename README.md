@@ -12,6 +12,9 @@ This tiny app is meant to address that.
 
 You author a strategy with a pretty straight forward DSL. The app will run this
 strategy against a given number of games (default 100) and output how it does.
+
+### Strategy DSL
+
 Here's an example strategy.
 
 ```
@@ -51,6 +54,14 @@ Here's an example strategy.
 
 The `[soft]` section describes soft-hand strategy. The `[hard]` section
 describes hard-hand strategy.
+
+The actions are described as follows.
+
+```
+H = hit
+D = double
+S = stand
+```
 
 You can run that strategy through the simulator like this.
 
