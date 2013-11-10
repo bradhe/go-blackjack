@@ -6,20 +6,14 @@ import (
 
 func main() {
 	outcomes := make(map[Outcome]int)
-	LoadStrategy("strategies/passive")
+	strategy := LoadStrategy("strategies/passive")
 
 	for i := 0; i < 10; i += 1 {
 		deck := NewMultipleDeck(DEFAULT_DECKS)
 		round := NewRound(deck.Shuffle())
 
 		strategy := func(round Round) Action {
-			if round.Dealer[0].Value < 6 {
-				return ACTION_STAND
-			} else if round.Player.Sum() < 17 {
-				return ACTION_HIT
-			}
-
-			return ACTION_STAND
+			return strategy.GetAction(round.Dealer, round.Player)
 		}
 
 		for {
