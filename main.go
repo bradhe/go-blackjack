@@ -23,7 +23,7 @@ func main() {
 	outcomes := make(map[Outcome]int)
 	strategy := LoadStrategy(*strategyFile)
 
-	for i := 0; i < 100000; i += 1 {
+	for i := 0; i < 100; i += 1 {
 		deck := NewMultipleDeck(DEFAULT_DECKS)
 		round := NewRound(deck.Shuffle())
 
