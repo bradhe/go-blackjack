@@ -1,6 +1,7 @@
 package main
 
 import (
+	"log"
 	"encoding/binary"
 	"math/rand"
 	"os"
@@ -76,6 +77,10 @@ func (round *Round) Play(determineAction func(round Round) Action) Outcome {
 	round.dealToDealer()
 	round.dealToPlayer()
 
+	if verbose {
+		log.Printf("Round starts. Dealer: %s, Player: %s", round.Dealer, round.Player)
+	}
+
 	// TODO: Add betting in here.
 
 	// If the player has blackjack, he wins!
@@ -87,6 +92,10 @@ func (round *Round) Play(determineAction func(round Round) Action) Outcome {
 		action := determineAction(*round)
 
 		if action == ACTION_STAND {
+			if verbose {
+				log.Println("Player stands.")
+			}
+
 			// The user wants to stand so let's see what the dealer
 			// does.
 			break
@@ -94,33 +103,66 @@ func (round *Round) Play(determineAction func(round Round) Action) Outcome {
 			// Deal a card to the player and go around again.
 			round.dealToPlayer()
 
+			if verbose {
+				log.Printf("Player hits. Hand: %s", round.Player)
+			}
+
 			// If the player busts, that's a problem.
 			if round.Player.IsBusted() {
 				break
 			}
 		} else if action == ACTION_DOUBLE {
 			round.dealToPlayer()
+
+			if verbose {
+				log.Printf("Player doubles. Hand: %s", round.Player)
+			}
+
 			break
 		}
 	}
 
 	if round.Player.IsBusted() {
+		if verbose {
+			log.Printf("Player busted!")
+		}
+
 		return OUTCOME_LOSS
 	}
 
 	// Now for the dealer: While the sum is less than 17, we hit.
 	for round.Dealer.Sum() < 17 {
 		round.dealToDealer()
+
+		if verbose {
+			log.Printf("Dealer hits. Hand: %s", round.Dealer)
+		}
 	}
 
 	// Okay, if the dealer busted, you win. If the dealer is greater, you
 	// win.
 	if round.Dealer.IsBusted() {
+		if verbose {
+			log.Printf("Dealer busted! Hand: %s", round.Dealer)
+		}
+
 		return OUTCOME_WIN
 	} else if round.Dealer.Sum() > round.Player.Sum() {
+		if verbose {
+			log.Printf("Dealer wins. Dealer: %s, Player: %s", round.Dealer, round.Player)
+		}
+
 		return OUTCOME_LOSS
 	} else if round.Player.Sum() == round.Dealer.Sum() {
+		if verbose {
+			log.Printf("Round pushes. Dealer: %s, Player: %s", round.Dealer, round.Player)
+		}
+
 		return OUTCOME_PUSH
+	}
+
+	if verbose {
+		log.Printf("Player wins! Dealer: %s, Player: %s", round.Dealer, round.Player)
 	}
 
 	return OUTCOME_WIN
