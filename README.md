@@ -8,6 +8,10 @@ wondering:
 
 This tiny app is meant to address that.
 
+## Disclaimer
+
+I actually don't know very much at all about Blackjack.
+
 ## How does it work?
 
 You author a strategy with a pretty straight forward DSL. The app will run this
